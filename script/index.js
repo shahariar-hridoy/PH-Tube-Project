@@ -121,7 +121,10 @@ const displayVideos = (videos) => {
                 </div>
                 <div class="intro">
                     <h2 class="text-sm font-semibold">${video.title}</h2>
-                    <p class="text-sm text-gray-500 flex gap-1 items-center">${video.authors[0].profile_name} <img class="w-4 h-4" src="https://img.icons8.com/?size=48&id=98A4yZTt9abw&format=png" alt=""></p>
+                    <p class="text-sm text-gray-500 flex gap-1 items-center">
+                    ${video.authors[0].profile_name}
+                    ${video.authors[0].verified == true ? `<img class="w-4 h-4" src="https://img.icons8.com/?size=48&id=98A4yZTt9abw&format=png" alt="">` : ``}
+                     </p>
                     <p class="text-sm text-gray-500 ">${video.others.views}</p>
                 </div>
             </div>
