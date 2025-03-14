@@ -17,8 +17,8 @@ function loadCategories() {
 }
 
 // create function of videos
-function loadVideos() {
-    fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
+function loadVideos(searchText = '') {
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
         .then((res) => res.json())
         .then((data) => {
             removeActiveClass()
@@ -111,7 +111,7 @@ const displayVideos = (videos) => {
                 <span class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-sm text-xs">3hrs 56 min ago</span>
             </figure>
             <!-- card body -->
-            <div class=" flex gap-3 px-0 py-5 px-2">
+            <div class=" flex gap-3 py-5 px-2">
                 <div>
                     <div class="avatar">
                         <div class="ring-primary ring-offset-base-100 w-6 rounded-full ring ring-offset-2">
@@ -133,8 +133,12 @@ const displayVideos = (videos) => {
         `
         videoContainer.appendChild(videoCard)
     });
-
 }
+
+document.getElementById('search-input').addEventListener("keyup", (e) =>{
+    const input = e.target.value;
+    loadVideos(input);
+})
 
 loadCategories()
 
