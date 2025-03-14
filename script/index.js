@@ -42,6 +42,36 @@ const loadCategoryVideos = (id) => {
         })
 }
 
+const loadVideoDetails = (videoId) =>{
+    const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayVideoDetails(data.video))
+}
+
+const displayVideoDetails = (video) =>{
+    document.getElementById('video_details').showModal()
+    const detailsContainer = document.getElementById('details-container');
+
+    detailsContainer.innerHTML = `
+    <div class="card bg-base-100 image-full text-white  shadow-sm">
+  <figure>
+    <img
+      src="${video.thumbnail}"
+      alt="Image" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">${video.title}</h2>
+    <p>${video.description}</p>
+    
+
+  </div>
+</div>
+    `
+}
+
+
+
 function displayCatagories(categories) {
     // get the container
     const categoryContainer = document.getElementById('category-container');
@@ -64,7 +94,7 @@ const displayVideos = (videos) => {
     videoContainer.innerHTML = ''
     if (videos.length == 0) {
         videoContainer.innerHTML = `
-        <div class=" col-span-full flex flex-col justify-center items-center py-20 gap-4">
+        <div class=" col-span-full flex flex-col justify-center items-center py-20 gap-4 ">
             <img class="w-[120px]" src="Assets/Icon.png" alt="">
             <h2 class="text-2xl font-bold">Oops!! Sorry, There is no content here</h2>
         </div>
@@ -75,13 +105,13 @@ const displayVideos = (videos) => {
 
         const videoCard = document.createElement('div')
         videoCard.innerHTML = `
-                <div class="card bg-base-100">
+                <div class="card bg-base-100 shadow-sm ">
             <figure class="relative">
                 <img class="w-full h-[150px] object-cover" src="${video.thumbnail}" alt="image" />
                 <span class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-sm text-xs">3hrs 56 min ago</span>
             </figure>
             <!-- card body -->
-            <div class=" flex gap-3 px-0 py-5">
+            <div class=" flex gap-3 px-0 py-5 px-2">
                 <div>
                     <div class="avatar">
                         <div class="ring-primary ring-offset-base-100 w-6 rounded-full ring ring-offset-2">
@@ -95,6 +125,7 @@ const displayVideos = (videos) => {
                     <p class="text-sm text-gray-500 ">${video.others.views}</p>
                 </div>
             </div>
+            <button onclick = "loadVideoDetails('${video.video_id}')" class="btn btn-block">Show Details</button>
         </div>
         `
         videoContainer.appendChild(videoCard)
